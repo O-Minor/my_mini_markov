@@ -103,18 +103,26 @@ for i in range(300):
     output += next_item
 # print("from sab:",output, "\n")
 
-def markov_predictor(in_file, n, out_len, prompt):
-    in_file_model = markov_model(n, open(in_file).read())
-    # print(in_file_model)
-    output = prompt
+def markov_predictor(in_file, n, out_len, start = None):
+    model = markov_model(n, open(in_file).read())
+
+    # print(in_model)
+    if start is None:
+        start = random.choice(list(model.keys()))
+    if start not in model.keys():
+        print("trying to avoid key error")
+        start = random.choice(list(in_model.keys()))
+
+    output = start
+    print(output, type(output))
     for i in range(out_len):
         ngram = tuple(output[-n:])
-        next_item = random.choice(in_file_model[ngram])
+        next_item = random.choice(in_model[ngram])
         output += next_item
     print(output)
 
 print("pred from func:")
-markov_predictor("frank_text_clean.txt", 5, 300, "the st")
+markov_predictor("frank_text_clean.txt", 2, 300, "the thing")
 
 # GRAVEYARD
 '''
