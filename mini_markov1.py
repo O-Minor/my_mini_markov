@@ -14,7 +14,7 @@ import random
 # source for text: https://www.gutenberg.org/cache/epub/84/pg84.txt
 
 # open an ethically sourced free range organic cruelty free .txt file
-in_text = open("frank_text.txt").read()
+in_text = open("frank_text_clean.txt").read()
 # split text into words on spaces
 words = in_text.split()
 # make n-gram pairs of words
@@ -47,7 +47,7 @@ def ngrams_for_sequence(n, seq):
     return [tuple(seq[i:i+n]) for i in range(len(seq)-n+1)]
 
 n_gram_x = ngrams(5)
-n_gram_seq = ngrams_for_sequence(3, open("frank_text.txt").read())
+n_gram_seq = ngrams_for_sequence(3, open("frank_text_clean.txt").read())
 print(random.sample(n_gram_x, 10),"\n")
 print(random.sample(n_gram_seq, 10),"\n")
 
@@ -89,40 +89,41 @@ def markov_model(n, seq):
 
 markov_model(2, "condescendences")
 frankenstein_markov_model = markov_model(2, open("frank_text_clean.txt").read().split())
-print(frankenstein_markov_model,"\n")
+# print(frankenstein_markov_model,"\n")
 
-print("predict from frank:\n",frankenstein_markov_model[('that', 'he')])
+# print("predict from frank:\n",frankenstein_markov_model[('that', 'he')])
 
 n=5
 blorbo_model = markov_model(n, open("simple_sabotage_clean.txt").read())
-print(blorbo_model)
+# print(blorbo_model)
 output = "the st"
 for i in range(300):
     ngram = tuple(output[-n:])
     next_item = random.choice(blorbo_model[ngram])
     output += next_item
-# print("from sab:",output, "\n")
+# print("from sab:",output, "\n")ƒor
 
 def markov_predictor(in_file, n, out_len, start = None):
-    model = markov_model(n, open(in_file).read())
+    in_model = markov_model(n, open(in_file).read())
 
     # print(in_model)
     if start is None:
         start = random.choice(list(model.keys()))
+    '''
     if start not in model.keys():
         print("trying to avoid key error")
         start = random.choice(list(in_model.keys()))
-
+    '''
     output = start
-    print(output, type(output))
+    # print(output, type(output))
     for i in range(out_len):
         ngram = tuple(output[-n:])
         next_item = random.choice(in_model[ngram])
         output += next_item
     print(output)
 
-print("pred from func:")
-markov_predictor("frank_text_clean.txt", 2, 300, "the thing")
+print("pred from func:\n")
+markov_predictor("frank_text_clean.txt", 3, 300, "I w")
 
 # GRAVEYARD
 '''
